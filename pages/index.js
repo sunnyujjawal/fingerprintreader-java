@@ -17,7 +17,40 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.description}>
           <p>
-            Get started by editing&nbsp;
+            There is no specific code for a fingerprint reader in Java, as the process of reading fingerprints typically involves using a device driver to communicate with the fingerprint reader hardware, and this device driver is specific to the device being used. However, here is an example of how you can use the Java Fingerprint SDK to capture and verify fingerprints.
+
+import com.digitalpersona.onetouch.*;
+import com.digitalpersona.onetouch.verification.*;
+
+public class VerifyFingerprint
+{
+    public static void main(String[] args)
+    {
+        DPFPVerification verificator = DPFPGlobal.getVerificationFactory().createVerification();
+
+        while (true)
+        {
+            // Prompt the user to enter their fingerprint
+            DPFPFingerIndex finger = DPFPConsole.getFingerIndex();
+            if (finger == DPFPFingerIndex.LEFT_THUMB || finger == DPFPFingerIndex.RIGHT_THUMB)
+                break;
+
+            // Capture their fingerprint
+            DPFPSample sample = DPFPConsole.getSample(
+                String.format("Scan your %s finger", finger),
+                DPFPSample.PURPOSE_VERIFICATION
+            );
+
+            // Verify the fingerprint against the enrolled fingerprint
+            DPFPVerificationResult result = verificator.verify(sample, enrolledSample);
+            if (result.isVerified())
+                System.out.println("Fingerprint verified!");
+            else
+                System.out.println("Fingerprint not recognized, try again.");
+        }
+    }
+}
+<p>Code by <a href="https://gharvisit.com">Gharvisit</a> and <a href="https://allalerts.in">All alerts</a></p>
             <code className={styles.code}>pages/index.js</code>
           </p>
           <div>
